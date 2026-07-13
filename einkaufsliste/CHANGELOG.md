@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.0.4 – 2026-07-13
+- `repository.yaml`: Name auf "wolli112-vc Addon Repo" geändert, damit alle Add-ons im HA Store unter demselben Repository-Namen erscheinen
+
 ## 1.0.3 – 2026-07-13
 - Neues Produkt kann jetzt zusätzlich zum Button auch mit der Enter-Taste hinzugefügt werden
 
