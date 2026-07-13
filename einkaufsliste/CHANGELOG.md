@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.5 – 2026-07-13
+- 🔄 Aktualisieren-Button hinzugefügt, um die Liste manuell neu zu laden
+- Einträge können jetzt per Klick inline bearbeitet werden (Anzahl, Kategorie, Produkt)
+
 ## 1.0.4 – 2026-07-13
 - `repository.yaml`: Name auf "wolli112-vc Addon Repo" geändert, damit alle Add-ons im HA Store unter demselben Repository-Namen erscheinen
 

@@ -130,6 +130,15 @@
             padding: 2rem;
             color: var(--muted);
         }
+        td.editable { cursor: pointer; }
+        td.editable:hover { background: #f0f0f0; }
+        td.editing input, td.editing select {
+            width: 100%;
+            font-size: .95rem;
+            padding: .25rem .4rem;
+            border: 1px solid var(--primary);
+            border-radius: 4px;
+        }
         @media (max-width: 600px) {
             th, td { padding: .4rem .5rem; font-size: .9rem; }
             .col-btns { width: 100px; }
@@ -142,6 +151,7 @@
     <h1>🛒 Einkaufsliste</h1>
     <div class="search-wrap">
         <input type="text" id="search" placeholder="Produkt oder Kategorie suchen..." autocomplete="off">
+        <button class="btn-action" onclick="load()" title="Aktualisieren">🔄</button>
         <button class="btn-action" onclick="clearAll()">🗑️ Alles löschen</button>
     </div>
     <table>
@@ -233,6 +243,7 @@
                 }
 
                 const tr = document.createElement('tr');
+                tr.dataset.id = item.id;
                 tr.innerHTML = `
                     <td class="col-btns">
                         <div class="actions">
@@ -241,11 +252,92 @@
                             <button class="btn btn-red" onclick="deleteItem('${item.id}')">✕</button>
                         </div>
                     </td>
-                    <td class="col-qty">${item.quantity}</td>
-                    <td class="col-cat">${cat ? '<span class="cat-tag">' + escapeHtml(cat) + '</span>' : '-'}</td>
-                    <td>${escapeHtml(item.product)}</td>
+                    <td class="col-qty editable" data-field="quantity" data-id="${item.id}">${item.quantity}</td>
+                    <td class="col-cat editable" data-field="category" data-id="${item.id}">${cat ? '<span class="cat-tag">' + escapeHtml(cat) + '</span>' : '-'}</td>
+                    <td class="editable" data-field="product" data-id="${item.id}">${escapeHtml(item.product)}</td>
                 `;
                 tbody.appendChild(tr);
+            });
+
+            // Klick-Handler für Inline-Edit
+            tbody.querySelectorAll('td.editable').forEach(td => {
+                td.addEventListener('click', function(e) {
+                    if (this.classList.contains('editing')) return;
+                    startEdit(this);
+                });
+            });
+        }
+
+        function startEdit(td) {
+            const field = td.dataset.field;
+            const id = td.dataset.id;
+            const item = allItems.find(i => i.id === id);
+            if (!item) return;
+
+            td.classList.add('editing');
+            let input;
+
+            if (field === 'category') {
+                input = document.createElement('input');
+                input.type = 'text';
+                input.value = item.category || '';
+                input.setAttribute('list', 'cat-list');
+            } else if (field === 'quantity') {
+                input = document.createElement('input');
+                input.type = 'number';
+                input.value = item.quantity;
+                input.min = 1;
+            } else {
+                input = document.createElement('input');
+                input.type = 'text';
+                input.value = item.product;
+            }
+
+            td.innerHTML = '';
+            td.appendChild(input);
+            input.focus();
+            input.select();
+
+            function save() {
+                let value = input.value.trim();
+                if (field === 'quantity') {
+                    value = parseInt(value) || item.quantity;
+                    if (value < 1) value = 1;
+                }
+                td.classList.remove('editing');
+                td.innerHTML = '';
+
+                if (value === (field === 'quantity' ? item.quantity : (item[field] || ''))) {
+                    render(); // nichts geändert
+                    return;
+                }
+
+                const payload = {};
+                payload[field] = value;
+                api(`/items/${id}`, {
+                    method: 'PUT',
+                    headers: {'Content-Type':'application/json'},
+                    body: JSON.stringify(payload)
+                }).then(() => load()).catch(err => {
+                    alert('Fehler beim Speichern: ' + err.message);
+                    load();
+                });
+            }
+
+            function cancel() {
+                td.classList.remove('editing');
+                render();
+            }
+
+            input.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') save();
+                if (e.key === 'Escape') cancel();
+            });
+            input.addEventListener('blur', function() {
+                // kurzes Timeout, damit Klicks innerhalb der Zelle nicht als Blur zählen
+                setTimeout(() => {
+                    if (td.classList.contains('editing')) save();
+                }, 150);
             });
         }
 
