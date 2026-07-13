@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.0.3 – 2026-07-13
+- Neues Produkt kann jetzt zusätzlich zum Button auch mit der Enter-Taste hinzugefügt werden
+
 ## 1.0.2 – 2026-07-13
 - Einzelnes Löschen per ✕ erfolgt jetzt ohne Bestätigungsdialog (direkt)
 - Bestätigungsdialog bleibt nur bei "Alles löschen" erhalten

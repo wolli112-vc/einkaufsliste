@@ -298,6 +298,9 @@
         }
 
         document.getElementById('search').addEventListener('input', render);
+        document.getElementById('new-product').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') addItem();
+        });
         load();
     </script>
 </body>

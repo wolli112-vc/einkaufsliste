@@ -1,5 +1,5 @@
 name: "Einkaufsliste"
-version: "1.0.2"
+version: "1.0.3"
 slug: "einkaufsliste"
 description: "Einfache Einkaufsliste mit Anzahl, Kategorie und Produkt"
 url: "https://github.com/wolli112-vc/einkaufsliste"
