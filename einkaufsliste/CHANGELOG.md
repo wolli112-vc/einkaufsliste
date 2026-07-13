@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.2 – 2026-07-13
+- Einzelnes Löschen per ✕ erfolgt jetzt ohne Bestätigungsdialog (direkt)
+- Bestätigungsdialog bleibt nur bei "Alles löschen" erhalten
+
 ## 1.0.1 – 2026-07-13
 - Löschen-Button (✕) von der rechten Seite direkt neben +/− in die Buttons-Spalte verschoben
 - Gleiche Button-Optik: roter Kreis mit weißem ✕ wie bei −

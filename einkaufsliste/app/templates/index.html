@@ -271,7 +271,6 @@
         }
 
         async function deleteItem(id) {
-            if (!confirm('Eintrag wirklich löschen?')) return;
             await api(`/items/${id}`, {method: 'DELETE'});
             await load();
         }
