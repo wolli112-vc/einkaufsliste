@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.6 – 2026-07-13
+- Liste aktualisiert sich jetzt automatisch alle 10 Sekunden (zusätzlich zum manuellen 🔄-Button)
+- Auto-Update pausiert automatisch, während ein Eintrag inline bearbeitet wird
+
 ## 1.0.5 – 2026-07-13
 - 🔄 Aktualisieren-Button hinzugefügt, um die Liste manuell neu zu laden
 - Einträge können jetzt per Klick inline bearbeitet werden (Anzahl, Kategorie, Produkt)

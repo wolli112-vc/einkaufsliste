@@ -187,6 +187,7 @@
     <script>
         let allItems = [];
         let allCategories = [];
+        let autoRefreshInterval = null;
 
         async function api(path, opts={}) {
             const res = await fetch('./api' + path, opts);
@@ -201,6 +202,17 @@
             ]);
             updateCatList();
             render();
+        }
+
+        function isEditing() {
+            return document.querySelector('td.editing') !== null;
+        }
+
+        function startAutoRefresh() {
+            if (autoRefreshInterval) return;
+            autoRefreshInterval = setInterval(() => {
+                if (!isEditing()) load();
+            }, 10000);
         }
 
         function updateCatList() {
@@ -394,6 +406,7 @@
             if (e.key === 'Enter') addItem();
         });
         load();
+        startAutoRefresh();
     </script>
 </body>
 </html>
