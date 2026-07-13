@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.0.1 – 2026-07-13
+- Löschen-Button (✕) von der rechten Seite direkt neben +/− in die Buttons-Spalte verschoben
+- Gleiche Button-Optik: roter Kreis mit weißem ✕ wie bei −
+- Spaltenanzahl reduziert (keine separate Aktionsspalte mehr)
+
 ## 1.0.0 – 2026-07-13
 - Erstveröffentlichung des Add-Ons "Einkaufsliste"
 - Verwaltung von Einkaufsartikeln mit Anzahl, Kategorie und Produkt

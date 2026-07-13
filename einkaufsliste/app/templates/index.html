@@ -67,10 +67,9 @@
             text-transform: uppercase;
             letter-spacing: .03em;
         }
-        .col-btns { width: 80px; text-align: center; }
+        .col-btns { width: 120px; text-align: center; }
         .col-qty { width: 70px; }
         .col-cat { width: 140px; }
-        .col-action { width: 50px; text-align: center; }
         .btn {
             border: none;
             border-radius: 50%;
@@ -88,16 +87,6 @@
         .btn-red  { background: var(--red); }
         .btn:hover { opacity: .85; }
         .btn:active { transform: scale(.95); }
-        .btn-del {
-            background: transparent;
-            color: var(--red);
-            border: 1px solid var(--red);
-            border-radius: 4px;
-            padding: .2rem .5rem;
-            cursor: pointer;
-            font-size: .8rem;
-        }
-        .btn-del:hover { background: var(--red); color: #fff; }
         .new-row input, .new-row select {
             border: 1px solid var(--border);
             border-radius: 4px;
@@ -143,7 +132,9 @@
         }
         @media (max-width: 600px) {
             th, td { padding: .4rem .5rem; font-size: .9rem; }
+            .col-btns { width: 100px; }
             .col-qty, .col-cat { width: auto; }
+            .btn { width: 24px; height: 24px; font-size: .85rem; }
         }
     </style>
 </head>
@@ -160,11 +151,10 @@
                 <th class="col-qty">Anzahl</th>
                 <th class="col-cat">Kategorie</th>
                 <th>Produkt</th>
-                <th class="col-action"></th>
             </tr>
         </thead>
         <tbody id="items-body">
-            <tr><td colspan="5" class="empty-state">Lade Daten...</td></tr>
+            <tr><td colspan="4" class="empty-state">Lade Daten...</td></tr>
         </tbody>
         <tfoot>
             <tr class="new-row">
@@ -175,10 +165,9 @@
                     <datalist id="cat-list"></datalist>
                 </td>
                 <td><input type="text" id="new-product" placeholder="Produktname" autocomplete="off"></td>
-                <td></td>
             </tr>
             <tr class="new-row">
-                <td colspan="5" style="text-align:right; border:none;">
+                <td colspan="4" style="text-align:right; border:none;">
                     <button class="save-btn" onclick="addItem()">➕ Hinzufügen</button>
                 </td>
             </tr>
@@ -226,7 +215,7 @@
 
             if (filtered.length === 0) {
                 const tr = document.createElement('tr');
-                tr.innerHTML = `<td colspan="5" class="empty-state">Keine Einträge vorhanden</td>`;
+                tr.innerHTML = `<td colspan="4" class="empty-state">Keine Einträge vorhanden</td>`;
                 tbody.appendChild(tr);
                 return;
             }
@@ -238,7 +227,7 @@
                 if (cat !== lastCat) {
                     const tr = document.createElement('tr');
                     tr.className = 'cat-group';
-                    tr.innerHTML = `<td colspan="5">${cat ? escapeHtml(cat) : '<span class="cat-empty">Ohne Kategorie</span>'}</td>`;
+                    tr.innerHTML = `<td colspan="4">${cat ? escapeHtml(cat) : '<span class="cat-empty">Ohne Kategorie</span>'}</td>`;
                     tbody.appendChild(tr);
                     lastCat = cat;
                 }
@@ -249,12 +238,12 @@
                         <div class="actions">
                             <button class="btn btn-green" onclick="changeQty('${item.id}', 1)">+</button>
                             <button class="btn btn-red"  onclick="changeQty('${item.id}', -1)">−</button>
+                            <button class="btn btn-red" onclick="deleteItem('${item.id}')">✕</button>
                         </div>
                     </td>
                     <td class="col-qty">${item.quantity}</td>
                     <td class="col-cat">${cat ? '<span class="cat-tag">' + escapeHtml(cat) + '</span>' : '-'}</td>
                     <td>${escapeHtml(item.product)}</td>
-                    <td class="col-action"><button class="btn-del" onclick="deleteItem('${item.id}')">✕</button></td>
                 `;
                 tbody.appendChild(tr);
             });
