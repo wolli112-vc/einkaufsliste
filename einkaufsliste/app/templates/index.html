@@ -159,8 +159,8 @@
             <tr>
                 <th class="col-btns"></th>
                 <th class="col-qty">Anzahl</th>
-                <th class="col-cat">Kategorie</th>
                 <th>Produkt</th>
+                <th class="col-cat">Kategorie</th>
             </tr>
         </thead>
         <tbody id="items-body">
@@ -170,11 +170,11 @@
             <tr class="new-row">
                 <td></td>
                 <td><input type="number" id="new-qty" value="1" min="1"></td>
+                <td><input type="text" id="new-product" placeholder="Produktname" autocomplete="off"></td>
                 <td>
                     <input list="cat-list" id="new-category" placeholder="Kategorie (optional)" autocomplete="off">
                     <datalist id="cat-list"></datalist>
                 </td>
-                <td><input type="text" id="new-product" placeholder="Produktname" autocomplete="off"></td>
             </tr>
             <tr class="new-row">
                 <td colspan="4" style="text-align:right; border:none;">
@@ -265,8 +265,8 @@
                         </div>
                     </td>
                     <td class="col-qty editable" data-field="quantity" data-id="${item.id}">${item.quantity}</td>
-                    <td class="col-cat editable" data-field="category" data-id="${item.id}">${cat ? '<span class="cat-tag">' + escapeHtml(cat) + '</span>' : '-'}</td>
                     <td class="editable" data-field="product" data-id="${item.id}">${escapeHtml(item.product)}</td>
+                    <td class="col-cat editable" data-field="category" data-id="${item.id}">${cat ? '<span class="cat-tag">' + escapeHtml(cat) + '</span>' : '-'}</td>
                 `;
                 tbody.appendChild(tr);
             });

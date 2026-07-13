@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.0.7 – 2026-07-13
+- Spaltenreihenfolge angepasst: Anzahl, Produkt, Kategorie (Kategorie steht jetzt am Ende)
+
 ## 1.0.6 – 2026-07-13
 - Liste aktualisiert sich jetzt automatisch alle 10 Sekunden (zusätzlich zum manuellen 🔄-Button)
 - Auto-Update pausiert automatisch, während ein Eintrag inline bearbeitet wird
