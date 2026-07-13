@@ -14,6 +14,7 @@ ingress: true
 ingress_port: 8099
 panel_icon: "mdi:cart"
 panel_title: "Einkaufsliste"
+panel_admin: false
 options:
   log_level: info
 schema:
