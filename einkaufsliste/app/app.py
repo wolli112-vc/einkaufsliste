@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import fcntl
 import json
 import os
 from datetime import datetime
@@ -10,18 +11,23 @@ def _ensure_dir(path):
     os.makedirs(os.path.dirname(path), exist_ok=True)
 
 def load_data():
-    if os.path.exists(DATA_FILE):
+    if not os.path.exists(DATA_FILE):
+        return []
+    with open(DATA_FILE, "r", encoding="utf-8") as f:
+        fcntl.flock(f, fcntl.LOCK_SH)
         try:
-            with open(DATA_FILE, "r", encoding="utf-8") as f:
-                return json.load(f)
-        except Exception:
-            pass
-    return []
+            return json.load(f)
+        finally:
+            fcntl.flock(f, fcntl.LOCK_UN)
 
 def save_data(data):
     _ensure_dir(DATA_FILE)
     with open(DATA_FILE, "w", encoding="utf-8") as f:
-        json.dump(data, f, indent=2, ensure_ascii=False)
+        fcntl.flock(f, fcntl.LOCK_EX)
+        try:
+            json.dump(data, f, indent=2, ensure_ascii=False)
+        finally:
+            fcntl.flock(f, fcntl.LOCK_UN)
     print("[Einkaufsliste] Daten gespeichert.")
 
 app = Flask(__name__)
