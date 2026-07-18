@@ -162,14 +162,9 @@
                 <th>Produkt</th>
                 <th class="col-cat">Kategorie</th>
             </tr>
-        </thead>
-        <tbody id="items-body">
-            <tr><td colspan="4" class="empty-state">Lade Daten...</td></tr>
-        </tbody>
-        <tfoot>
             <tr class="new-row">
                 <td></td>
-                <td><input type="number" id="new-qty" value="1" min="1"></td>
+                <td><input type="number" id="new-qty" value="1" min="0" step="any"></td>
                 <td><input type="text" id="new-product" placeholder="Produktname" autocomplete="off"></td>
                 <td>
                     <input list="cat-list" id="new-category" placeholder="Kategorie (optional)" autocomplete="off">
@@ -181,7 +176,10 @@
                     <button class="save-btn" onclick="addItem()">➕ Hinzufügen</button>
                 </td>
             </tr>
-        </tfoot>
+        </thead>
+        <tbody id="items-body">
+            <tr><td colspan="4" class="empty-state">Lade Daten...</td></tr>
+        </tbody>
     </table>
 
     <script>
@@ -298,7 +296,8 @@
                 input = document.createElement('input');
                 input.type = 'number';
                 input.value = item.quantity;
-                input.min = 1;
+                input.min = 0;
+                input.step = 'any';
             } else {
                 input = document.createElement('input');
                 input.type = 'text';
@@ -313,8 +312,8 @@
             function save() {
                 let value = input.value.trim();
                 if (field === 'quantity') {
-                    value = parseInt(value) || item.quantity;
-                    if (value < 1) value = 1;
+                    value = parseFloat(value) || item.quantity;
+                    if (value < 0) value = 0;
                 }
                 td.classList.remove('editing');
                 td.innerHTML = '';
@@ -362,7 +361,8 @@
         async function changeQty(id, delta) {
             const item = allItems.find(i => i.id === id);
             if (!item) return;
-            const newQty = Math.max(0, item.quantity + delta);
+            const qty = parseFloat(item.quantity);
+            const newQty = Math.max(0, qty + delta);
             await api(`/items/${id}`, {
                 method: 'PUT',
                 headers: {'Content-Type':'application/json'},
@@ -380,7 +380,7 @@
         }
 
         async function addItem() {
-            const qty = parseInt(document.getElementById('new-qty').value) || 1;
+            const qty = parseFloat(document.getElementById('new-qty').value) || 1;
             const product = document.getElementById('new-product').value.trim();
             const category = document.getElementById('new-category').value.trim();
             if (!product) { alert('Bitte Produktname eingeben'); return; }

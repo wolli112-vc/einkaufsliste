@@ -55,7 +55,7 @@ def add_item():
     items = load_data()
     new_item = {
         "id": datetime.now().strftime("%Y%m%d%H%M%S%f"),
-        "quantity": int(data.get("quantity", 1)),
+        "quantity": float(data.get("quantity", 1)),
         "product": data.get("product", "").strip(),
         "category": data.get("category", "").strip()
     }
@@ -70,7 +70,7 @@ def update_item(item_id):
     for item in items:
         if item["id"] == item_id:
             if "quantity" in data:
-                item["quantity"] = max(0, int(data["quantity"]))
+                item["quantity"] = max(0, float(data["quantity"]))
             if "product" in data:
                 item["product"] = data["product"].strip()
             if "category" in data:

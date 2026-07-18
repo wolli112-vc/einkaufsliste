@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.9 – 2026-07-18
+- Eingabezeile für neue Artikel jetzt immer über der Liste (statt unterhalb)
+- Kommazahlen bei Mengen möglich; `+`/`-` erhöht/verringert die ganze Stelle vor dem Komma
+
 ## 1.0.8 – 2026-07-17
 - **File-Locking** hinzugefügt: Alle Dateizugriffe (`load_data` + `save_data`) nutzen jetzt `fcntl`-Locks, um gleichzeitige Schreibzugriffe zu verhindern
 - Das ist Voraussetzung für die Integration mit der Warenwirtschaft, die jetzt direkt in die Einkaufsliste schreiben kann
